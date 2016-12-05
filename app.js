@@ -8,6 +8,12 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var books = require('./routes/book');
+var seeder = require('./routes/seeder');
+var api = require('./routes/auth');
+var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var config = require('./config'); // get our config file
+
+
 
 // load mongoose package
 var mongoose = require('mongoose');
@@ -16,8 +22,10 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // connect to MongoDB
-mongoose.connect('mongodb://localhost/bookApiDB')
-  .then(() =>  console.log('connection succesful'))
+/*mongoose.connect('mongodb://localhost/bookApiDB')
+*/
+
+mongoose.connect(config.database).then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 
 var app = express();
@@ -37,7 +45,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 app.use('/books', books);
+app.use('/seeder', seeder);
+app.use('/api', api);
 
+
+// error handlers
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
