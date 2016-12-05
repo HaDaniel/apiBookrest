@@ -18,7 +18,7 @@ router.get('/', function(req, res) {
     if (err) throw err;
 
     console.log('User saved successfully');
-    res.json({ success: true });
+    //res.json({ success: true });
   });
   var livre1  = new Book({
     titre: 'livre1',
@@ -31,8 +31,10 @@ router.get('/', function(req, res) {
     if (err) throw err;
 
     console.log('Livre saved successfully');
-    res.json({ success: true });
+    // 
   });
+
+  res.json({ success: true });
 });
 
 
