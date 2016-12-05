@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var middleware = require('./routes/middleware');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var books = require('./routes/book');
@@ -42,11 +43,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/books', books);
-app.use('/seeder', seeder);
+
+
 app.use('/api', api);
+app.use('/api', middleware);
+app.use('/', routes);
+app.use('/api/users', users);
+app.use('/api/books', books);
+app.use('/seeder', seeder);
+
+
+
+
+
 
 
 // error handlers
