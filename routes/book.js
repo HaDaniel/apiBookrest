@@ -1,43 +1,43 @@
 var express = require('express');
 var router = express.Router();
 
-var Todo = require('../models/Book.js');
+var book = require('../models/Book.js');
 
-/* GET /todos listing. */
+/* GET /books listing. */
 router.get('/', function(req, res, next) {
-  Todo.find(function (err, todos) {
+  book.find(function (err, books) {
     if (err) return next(err);
-    res.json(todos);
+    res.json(books);
   });
 });
 
-/* POST /todos */
+/* POST /books */
 router.post('/', function(req, res, next) {
-  Todo.create(req.body, function (err, post) {
+  book.create(req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/* GET /todos/id */
+/* GET /books/id */
 router.get('/:id', function(req, res, next) {
-  Todo.findById(req.params.id, function (err, post) {
+  book.findById(req.params.id, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/* PUT /todos/:id */
+/* PUT /books/:id */
 router.put('/:id', function(req, res, next) {
-  Todo.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
+  book.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
 });
 
-/* DELETE /todos/:id */
+/* DELETE /books/:id */
 router.delete('/:id', function(req, res, next) {
-  Todo.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+  book.findByIdAndRemove(req.params.id, req.body, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });
