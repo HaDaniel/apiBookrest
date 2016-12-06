@@ -23,7 +23,7 @@ router.get('/', function(req, res, next) {
 
 
 /* PUT /users/:id */
-router.put('/', function(req, res, next) {
+router.put('/read', function(req, res, next) {
   //Token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
   var decoded = jwt.decode(token, {complete: true});
@@ -37,7 +37,7 @@ router.put('/', function(req, res, next) {
       Book.findById(bookId, function (err, book){
 
           console.log(book);
-        user.books.push(book);
+        user.read.push(book);
 
         console.log(user.books);
         user.save();
@@ -49,11 +49,34 @@ router.put('/', function(req, res, next) {
 
    });
 
+});
+
+/* PUT /users/:id */
+router.put('/unread', function(req, res, next) {
+  //Token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var decoded = jwt.decode(token, {complete: true});
+
+  var userId = decoded.payload.data
+  var bookId = req.body.bookid;
 
 
-  /*User.findById(userId, function (err, user){
+  User.findById(userId, function (err, user){
 
-  });*/
+      Book.findById(bookId, function (err, book){
+
+          console.log(book);
+        user.unread.push(book);
+
+        console.log(user.books);
+        user.save();
+      });
+
+     if (err) return next(err);
+     res.json(user);
+
+
+   });
 });
 
 module.exports = router;
