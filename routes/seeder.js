@@ -23,7 +23,8 @@ router.get('/', function(req, res) {
   var livre1  = new Book({
     titre: 'livre1',
     description: 'description1',
-    auteur: 'auteur1'
+    auteur: 'auteur1',
+    codeBarre: 'codeBarre'
   });
 
   // save the sample user
@@ -31,7 +32,7 @@ router.get('/', function(req, res) {
     if (err) throw err;
 
     console.log('Livre saved successfully');
-    // 
+    //
   });
 
   res.json({ success: true });

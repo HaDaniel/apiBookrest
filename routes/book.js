@@ -3,6 +3,8 @@ var router = express.Router();
 
 var book = require('../models/Book.js');
 
+var jwt = require('jsonwebtoken');
+var config = require('../config');
 /* GET /books listing. */
 router.get('/', function(req, res, next) {
   book.find(function (err, books) {

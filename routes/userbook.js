@@ -1,46 +1,59 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../models/User.js');
+var Book = require('../models/Book.js');
 
-var book = require('../models/UserBook.js');
+var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
+var config = require('../config'); // get our config file
+var app = express();
+var ObjectID = require('mongodb').ObjectID;
 
-/* GET /books listing. */
+
+
+/* GET /users listing. */
 router.get('/', function(req, res, next) {
-  book.find(function (err, books) {
-    if (err) return next(err);
-    res.json(books);
-  });
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var decoded = jwt.decode(token, {complete: true});
+  var userId = decoded.payload.data
+
+
+
 });
 
-/* POST /books */
-router.post('/', function(req, res, next) {
-  book.create(req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
-});
 
-/* GET /books/id */
-router.get('/:id', function(req, res, next) {
-  book.findById(req.params.id, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
-});
 
-/* PUT /books/:id */
-router.put('/:id', function(req, res, next) {
-  book.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
-});
+/* PUT /users/:id */
+router.put('/', function(req, res, next) {
+  //Token
+  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var decoded = jwt.decode(token, {complete: true});
 
-/* DELETE /books/:id */
-router.delete('/:id', function(req, res, next) {
-  book.findByIdAndRemove(req.params.id, req.body, function (err, post) {
-    if (err) return next(err);
-    res.json(post);
-  });
+  var userId = decoded.payload.data
+  var bookId = req.body.bookid;
+
+
+  User.findById(userId, function (err, user){
+
+      Book.findById(bookId, function (err, book){
+
+          console.log(book);
+        user.books.push(book);
+
+        console.log(user.books);
+        user.save();
+      });
+
+     if (err) return next(err);
+     res.json(user);
+
+
+   });
+
+
+
+  /*User.findById(userId, function (err, user){
+
+  });*/
 });
 
 module.exports = router;
