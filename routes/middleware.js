@@ -8,10 +8,10 @@ var config = require('../config'); // get our config file
 
 // route middleware to verify a token
 router.use(function(req, res, next) {
-console.log('toto');
   // check header or url parameters or post parameters for token
   var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
+  //console.log( req.query.token);
   // decode token
   if (token) {
 

@@ -9,6 +9,7 @@ var middleware = require('./routes/middleware');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var books = require('./routes/book');
+var userbook = require('./routes/userbook');
 var seeder = require('./routes/seeder');
 var api = require('./routes/auth');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
@@ -46,11 +47,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/api', api);
+app.use('/seeder', seeder);
 app.use('/api', middleware);
 app.use('/', routes);
 app.use('/api/users', users);
 app.use('/api/books', books);
-app.use('/seeder', seeder);
+app.use('/api/userbook', userbook);
 
 
 
