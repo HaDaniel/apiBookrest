@@ -3,8 +3,14 @@ var router = express.Router();
 var User = require('../models/User.js');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 
+var user = require('../models/User.js');
 var config = require('../config'); // get our config file
 var app = express();
+
+router.get('/', function(req, res, next) {
+
+    res.json("Hello world");
+});
 
 // route to authenticate a user (POST http://localhost:4000/api/authenticate)
 router.post('/authenticate', function(req, res) {
@@ -29,7 +35,7 @@ router.post('/authenticate', function(req, res) {
         console.log(user);
 
         var token =   jwt.sign({data: user._id}, config.secret, { expiresIn: '1h' });
-      
+
         console.log('Auth Ok ' + user.name );
 
         // return the information including token as JSON
@@ -38,10 +44,15 @@ router.post('/authenticate', function(req, res) {
           token: token
         });
       }
-
     }
-
-  });
+    });
 });
 
+/* POST /users */
+router.post('/create', function(req, res, next) {
+  user.create(req.body, function (err, post) {
+    if (err) return next(err);
+    res.json(post);
+  });
+});
 module.exports = router;

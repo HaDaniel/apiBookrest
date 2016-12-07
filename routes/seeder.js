@@ -4,7 +4,11 @@ var router = express.Router();
 var User = require('../models/User.js');
 var Book = require('../models/Book.js');
 
+var mongoose = require('mongoose');
+
 router.get('/', function(req, res) {
+
+  mongoose.connection.db.dropDataBase();
 
   // create a sample user
   var admin = new User({
