@@ -6,7 +6,7 @@ var book = require('../models/Book.js').schema;
 module.exports = mongoose.model('User', new Schema({
     name: String,
     password: String,
-    admin: Boolean,
+    admin: { type: Boolean, default: false },
     unread: [book],
     read: [book]
 }));

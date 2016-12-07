@@ -41,7 +41,8 @@ router.post('/authenticate', function(req, res) {
         // return the information including token as JSON
         res.json({
           success: true,
-          token: token
+          token: token,
+          userId: user._id
         });
       }
     }
