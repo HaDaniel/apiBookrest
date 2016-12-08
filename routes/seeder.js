@@ -8,7 +8,7 @@ var mongoose = require('mongoose');
 
 router.get('/', function(req, res) {
 
-  mongoose.connection.db.dropDataBase();
+//  mongoose.connection.db.dropDatabase();
 
   // create a sample user
   var admin = new User({
@@ -28,7 +28,7 @@ router.get('/', function(req, res) {
     titre: 'livre1',
     description: 'description1',
     auteur: 'auteur1',
-    codeBarre: 'codeBarre'
+    isbn: '1'
   });
 
   // save the sample user

@@ -41,16 +41,11 @@ router.put('/read', function(req, res, next) {
 
         console.log(user.books);
         user.save();
+        if (err) return next(err);
+        res.json(user);
       });
-
-     if (err) return next(err);
-     res.json(user);
-
-
    });
-
 });
-
 /* PUT /users/:id */
 router.put('/unread', function(req, res, next) {
   //Token

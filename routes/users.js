@@ -31,7 +31,8 @@ router.get('/:id', function(req, res, next) {
 
 /* GET /users/id */
 router.get('/name/:id', function(req, res, next) {
-  user.findOne(req.params.name, function (err, post) {
+    console.log('req.params.isbn ' ,  req.params);
+  user.findOne({ 'name': req.params.id } , function (err, post) {
     if (err) return next(err);
     res.json(post);
   });

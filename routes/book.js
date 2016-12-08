@@ -29,6 +29,23 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+/* GET /books/isbn/isbn */
+router.get('/isbn/:id', function(req, res, next) {
+  book.findOne({ 'isbn': req.params.id }, function (err, book) {
+      console.log('req.params.isbn ' ,  req.params);
+    if (!book) {
+      res.json({ success: false, message: 'Book not find.' });
+    } else if (book) {
+        res.json({
+          success: true,
+          message: 'Book find.',
+          book: book._id
+        });
+      }
+    });
+});
+
+
 /* PUT /books/:id */
 router.put('/:id', function(req, res, next) {
   book.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
